@@ -27,11 +27,8 @@ protected:
 	void SetupInputComponent() override;
 
 	void RequestMoveForward(float AxisValue);
-
 	void RequestMoveRight(float AxisValue);
-
 	void RequestLookUp(float AxisValue);
-
 	void RequestLookRight(float AxisValue);
 
 	void RequestJump();
@@ -41,7 +38,9 @@ protected:
 	void RequestCrouchEnd();
 
 	void RequestSprintStart();
-	void ResquestSprintEnd();
+	void RequestSprintEnd();
+
+	
 
 	/** Base lookup rate, in deg/sec. Other scaling may affect final lookup rate. */
 	UPROPERTY(EditAnywhere, Category = "Look")

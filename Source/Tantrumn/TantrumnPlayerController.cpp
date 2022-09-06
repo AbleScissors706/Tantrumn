@@ -2,6 +2,7 @@
 #include "TantrumnPlayerController.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "TantrumnCharacterBase.h"
 
 void ATantrumnPlayerController::BeginPlay()
 {
@@ -21,7 +22,7 @@ void ATantrumnPlayerController::SetupInputComponent()
 		InputComponent->BindAction(("Crouch"), EInputEvent::IE_Pressed, this, &ATantrumnPlayerController::RequestCrouchStart);
 		InputComponent->BindAction(("Crouch"), EInputEvent::IE_Released, this, &ATantrumnPlayerController::RequestCrouchEnd);
 		InputComponent->BindAction(("Sprint"), EInputEvent::IE_Pressed, this, &ATantrumnPlayerController::RequestSprintStart);
-		InputComponent->BindAction(("Sprint"), EInputEvent::IE_Released, this, &ATantrumnPlayerController::ResquestSprintEnd);
+		InputComponent->BindAction(("Sprint"), EInputEvent::IE_Released, this, &ATantrumnPlayerController::RequestSprintEnd);
 
 		InputComponent->BindAxis(("MoveForward"), this, &ATantrumnPlayerController::RequestMoveForward);
 		InputComponent->BindAxis(("MoveRight"), this, &ATantrumnPlayerController::RequestMoveRight);
@@ -65,20 +66,19 @@ void ATantrumnPlayerController::RequestCrouchEnd()
 
 void ATantrumnPlayerController::RequestSprintStart()
 {
-	if (GetCharacter())
+	if (ATantrumnCharacterBase* TantrumnCharacterBase = Cast<ATantrumnCharacterBase>(GetCharacter()))
 	{
-		GetCharacter()->GetCharacterMovement()->MaxWalkSpeed += SprintSpeed;
+		TantrumnCharacterBase->RequestSprintStart();
 	}
 }
 
-void ATantrumnPlayerController::ResquestSprintEnd()
+void ATantrumnPlayerController::RequestSprintEnd()
 {
-	if (GetCharacter())
+	if (ATantrumnCharacterBase* TantrumnCharacterBase = Cast<ATantrumnCharacterBase>(GetCharacter()))
 	{
-		GetCharacter()->GetCharacterMovement()->MaxWalkSpeed -= SprintSpeed;
+		TantrumnCharacterBase->RequestSprintEnd();
 	}
 }
-
 
 void ATantrumnPlayerController::RequestMoveForward(float AxisValue)
 {

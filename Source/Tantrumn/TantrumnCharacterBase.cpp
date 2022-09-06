@@ -2,6 +2,8 @@
 
 
 #include "TantrumnCharacterBase.h"
+#include "GameFrameWork/CharacterMovementComponent.h"
+#include "TantrumnPlayerController.h"
 
 // Sets default values
 ATantrumnCharacterBase::ATantrumnCharacterBase()
@@ -15,6 +17,10 @@ ATantrumnCharacterBase::ATantrumnCharacterBase()
 void ATantrumnCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+	if (GetCharacterMovement())
+	{
+		MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
+	}
 	
 }
 
@@ -22,6 +28,14 @@ void ATantrumnCharacterBase::BeginPlay()
 void ATantrumnCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (bIsStunned)
+	{
+		bIsStunned = (FApp::GetCurrentTime() - StunBeginTimestamp) < StunTime;
+		if (!bIsStunned)
+		{
+			OnStunEnd();
+		}
+	}
 
 }
 
@@ -32,3 +46,66 @@ void ATantrumnCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerIn
 
 }
 
+void ATantrumnCharacterBase::Landed(const FHitResult& Hit)
+{
+	Super::Landed(Hit);
+
+	APlayerController* TantrumnPlayerController = GetController<APlayerController>();
+	if (TantrumnPlayerController)
+	{
+		const float fallImpactSpeed = FMath::Abs(GetVelocity().Z);
+
+		if (fallImpactSpeed < MinImpactSpeed)
+		{
+			return;
+		}
+
+		const float DeltaImpact = MaxImpactSpeed - MinImpactSpeed;
+		const float FallRatio = FMath::Clamp((fallImpactSpeed - MinImpactSpeed) / DeltaImpact, 0.0f, 1.0f);
+
+		const bool bAffectSmall = FallRatio <= 0.5;
+		const bool bAffectLarge = FallRatio > 0.5;
+		
+		TantrumnPlayerController->PlayDynamicForceFeedback(FallRatio, 0.5f, bAffectLarge, bAffectSmall, bAffectLarge, bAffectSmall);
+	}
+}
+
+void ATantrumnCharacterBase::RequestSprintStart()
+{
+	if (!bIsStunned)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+	}
+}
+
+void ATantrumnCharacterBase::RequestSprintEnd()
+{
+	if (!bIsStunned)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = MaxWalkSpeed;
+	}
+}
+
+void ATantrumnCharacterBase::OnStunBegin(float StunRatio)
+{
+	if (bIsStunned)
+	{
+		//for now just early exit, alternative option would be to add to the stun time
+		return;
+	}
+
+	const float StunDelt = MaxStunTime - MinStunTime;
+	StunTime = MinStunTime + (StunRatio * StunDelt);
+	StunBeginTimestamp = 0.0f;
+	//StunBeginTimestamp = FApp::GetCurrentTime();
+	bIsStunned = true;
+	if (bIsSprinting)
+	{
+		RequestSprintEnd();
+	}
+}
+
+void ATantrumnCharacterBase::OnStunEnd()
+{
+
+}
