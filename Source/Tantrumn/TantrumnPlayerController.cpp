@@ -130,8 +130,8 @@ void ATantrumnPlayerController::SetupInputComponent()
 		InputComponent->BindAction(("Sprint"), EInputEvent::IE_Pressed, this, &ATantrumnPlayerController::RequestSprintStart);
 		InputComponent->BindAction(("Sprint"), EInputEvent::IE_Released, this, &ATantrumnPlayerController::RequestSprintEnd);
 		
-		InputComponent->BindAction(("PullorAimObject"), EInputEvent::IE_Pressed, this, &ATantrumnPlayerController::RequestPullorAimObject);
-		InputComponent->BindAction(("PullorAimObject"), EInputEvent::IE_Released, this, &ATantrumnPlayerController::RequestStopPullorAimObject);
+		InputComponent->BindAction(("PullObject"), EInputEvent::IE_Pressed, this, &ATantrumnPlayerController::RequestPullObject);
+		InputComponent->BindAction(("PullObject"), EInputEvent::IE_Released, this, &ATantrumnPlayerController::RequestStopPullObject);
 
 		InputComponent->BindAxis(("MoveForward"), this, &ATantrumnPlayerController::RequestMoveForward);
 		InputComponent->BindAxis(("MoveRight"), this, &ATantrumnPlayerController::RequestMoveRight);
@@ -239,7 +239,7 @@ void ATantrumnPlayerController::RequestThrowObject(float AxisValue)
 	}
 }
 
-void ATantrumnPlayerController::RequestPullorAimObject()
+void ATantrumnPlayerController::RequestPullObject()
 {
 	if (!CanProcessRequest())
 	{
@@ -260,7 +260,7 @@ void ATantrumnPlayerController::RequestPullorAimObject()
 	}
 }
 
-void ATantrumnPlayerController::RequestStopPullorAimObject()
+void ATantrumnPlayerController::RequestStopPullObject()
 {
 	if (ATantrumnCharacterBase* TantrumnCharacterBase = Cast<ATantrumnCharacterBase>(GetCharacter()))
 	{

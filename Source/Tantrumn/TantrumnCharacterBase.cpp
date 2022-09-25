@@ -573,9 +573,12 @@ void ATantrumnCharacterBase::ProcessTraceResult(const FHitResult& HitResult, boo
 		//don't allow for pulling objects while running/jogging
 		if (GetVelocity().SizeSquared() < 100.0f)
 		{
-			ServerPullObject(ThrowableActor);
-			CharacterThrowState = ECharacterThrowState::Pulling;
-			ThrowableActor->ToggleHighlight(false);
+			if (ThrowableActor && ThrowableActor->Pull(this))
+			{
+				ServerPullObject(ThrowableActor);
+				CharacterThrowState = ECharacterThrowState::Pulling;
+				ThrowableActor->ToggleHighlight(false);
+			}			
 		}
 	}
 }
@@ -704,6 +707,24 @@ void ATantrumnCharacterBase::OnMontageEnded(UAnimMontage* Montage, bool bInterru
 
 void ATantrumnCharacterBase::OnNotifyBeginReceived(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointNotifyPayload)
 {
+	if (ThrowableActor->GetRootComponent())
+	{
+		UPrimitiveComponent* RootPrimitiveComponent = Cast<UPrimitiveComponent>(ThrowableActor->GetRootComponent());
+		if (RootPrimitiveComponent)
+		{
+			RootPrimitiveComponent->IgnoreActorWhenMoving(this, true);
+		}
+	}
+
+	const FVector& Direction = GetActorForwardVector() * ThrowSpeed;
+	ThrowableActor->Launch(Direction);
+
+	if (CVarDisplayThrowVelocity->GetBool())
+	{
+		const FVector& Start = GetMesh()->GetSocketLocation(TEXT("ObjectAttach"));
+		DrawDebugLine(GetWorld(), Start, Start + Direction, FColor::Red, false, 5.0f);
+	}
+
 	//do this on server, since server owns the object we are throwing...
 	ServerBeginThrow();
 }

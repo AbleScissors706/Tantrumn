@@ -24,19 +24,19 @@ AThrowableActor::AThrowableActor()
 void AThrowableActor::BeginPlay()
 {
 	Super::BeginPlay();
-	if (HasAuthority())
-	{
+	//if (HasAuthority())
+	//{
 		ProjectileMovementComponent->OnProjectileStop.AddDynamic(this, &AThrowableActor::ProjectileStop);
-	}
+	//}
 	
 }
 
 void AThrowableActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	if (HasAuthority())
-	{
+	//if (HasAuthority())
+	//{
 		ProjectileMovementComponent->OnProjectileStop.RemoveDynamic(this, &AThrowableActor::ProjectileStop);
-	}
+	//}
 	Super::EndPlay(EndPlayReason);
 }
 

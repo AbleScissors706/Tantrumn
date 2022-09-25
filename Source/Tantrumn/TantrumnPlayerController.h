@@ -54,8 +54,8 @@ protected:
     void RequestLookRight(float AxisValue);
     void RequestThrowObject(float AxisValue);
 
-    void RequestPullorAimObject();
-    void RequestStopPullorAimObject();
+    void RequestPullObject();
+    void RequestStopPullObject();
 
     void RequestJump();
 	void RequestStopJump();
@@ -96,6 +96,6 @@ protected:
     float LastAxis = 0.0f;
 
     UPROPERTY(EditAnywhere, Category = "Input")
-    float FlickThreshold = 0.70f;
+    float FlickThreshold = 0.75f;
 
 };
