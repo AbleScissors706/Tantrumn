@@ -38,7 +38,6 @@ void ATantrumnPlayerController::OnUnPossess()
 	UE_LOG(LogTemp, Warning, TEXT("OnUnPossess: %s"), *GetName());
 }
 
-
 void ATantrumnPlayerController::ClientDisplayCountdown_Implementation(float GameCountdownDuration, TSubclassOf<UTantrumnGameWidget> InGameWidgetClass)
 {
 	if (!TantrumnGameWidget)
@@ -122,22 +121,22 @@ void ATantrumnPlayerController::SetupInputComponent()
 	Super::SetupInputComponent();
 	if (InputComponent)
 	{
-		InputComponent->BindAction(("Jump"), EInputEvent::IE_Pressed, this, &ATantrumnPlayerController::RequestJump);
-		InputComponent->BindAction(("Jump"), EInputEvent::IE_Released, this, &ATantrumnPlayerController::RequestStopJump);
+		InputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ATantrumnPlayerController::RequestJump);
+		InputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Released, this, &ATantrumnPlayerController::RequestStopJump);
 		
-		InputComponent->BindAction(("Crouch"), EInputEvent::IE_Pressed, this, &ATantrumnPlayerController::RequestCrouchStart);
-		InputComponent->BindAction(("Crouch"), EInputEvent::IE_Released, this, &ATantrumnPlayerController::RequestCrouchEnd);
-		InputComponent->BindAction(("Sprint"), EInputEvent::IE_Pressed, this, &ATantrumnPlayerController::RequestSprintStart);
-		InputComponent->BindAction(("Sprint"), EInputEvent::IE_Released, this, &ATantrumnPlayerController::RequestSprintEnd);
+		InputComponent->BindAction(TEXT("Crouch"), EInputEvent::IE_Pressed, this, &ATantrumnPlayerController::RequestCrouchStart);
+		InputComponent->BindAction(TEXT("Crouch"), EInputEvent::IE_Released, this, &ATantrumnPlayerController::RequestCrouchEnd);
+		InputComponent->BindAction(TEXT("Sprint"), EInputEvent::IE_Pressed, this, &ATantrumnPlayerController::RequestSprintStart);
+		InputComponent->BindAction(TEXT("Sprint"), EInputEvent::IE_Released, this, &ATantrumnPlayerController::RequestSprintEnd);
 		
-		InputComponent->BindAction(("PullObject"), EInputEvent::IE_Pressed, this, &ATantrumnPlayerController::RequestPullObject);
-		InputComponent->BindAction(("PullObject"), EInputEvent::IE_Released, this, &ATantrumnPlayerController::RequestStopPullObject);
+		InputComponent->BindAction(TEXT("PullorAimObject"), EInputEvent::IE_Pressed, this, &ATantrumnPlayerController::RequestPullorAimObject);
+		InputComponent->BindAction(TEXT("PullorAimObject"), EInputEvent::IE_Released, this, &ATantrumnPlayerController::RequestStopPullorAimObject);
 
-		InputComponent->BindAxis(("MoveForward"), this, &ATantrumnPlayerController::RequestMoveForward);
-		InputComponent->BindAxis(("MoveRight"), this, &ATantrumnPlayerController::RequestMoveRight);
-		InputComponent->BindAxis(("LookUp"), this, &ATantrumnPlayerController::RequestLookUp);
-		InputComponent->BindAxis(("LookRight"), this, &ATantrumnPlayerController::RequestLookRight);
-		InputComponent->BindAxis(("ThrowObject"), this, &ATantrumnPlayerController::RequestThrowObject);
+		InputComponent->BindAxis(TEXT("MoveForward"), this, &ATantrumnPlayerController::RequestMoveForward);
+		InputComponent->BindAxis(TEXT("MoveRight"), this, &ATantrumnPlayerController::RequestMoveRight);
+		InputComponent->BindAxis(TEXT("LookUp"), this, &ATantrumnPlayerController::RequestLookUp);
+		InputComponent->BindAxis(TEXT("LookRight"), this, &ATantrumnPlayerController::RequestLookRight);
+		InputComponent->BindAxis(TEXT("ThrowObject"), this, &ATantrumnPlayerController::RequestThrowObject);
 		
 	}
 }
@@ -239,7 +238,7 @@ void ATantrumnPlayerController::RequestThrowObject(float AxisValue)
 	}
 }
 
-void ATantrumnPlayerController::RequestPullObject()
+void ATantrumnPlayerController::RequestPullorAimObject()
 {
 	if (!CanProcessRequest())
 	{
@@ -260,7 +259,7 @@ void ATantrumnPlayerController::RequestPullObject()
 	}
 }
 
-void ATantrumnPlayerController::RequestStopPullObject()
+void ATantrumnPlayerController::RequestStopPullorAimObject()
 {
 	if (ATantrumnCharacterBase* TantrumnCharacterBase = Cast<ATantrumnCharacterBase>(GetCharacter()))
 	{

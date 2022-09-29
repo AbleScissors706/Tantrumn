@@ -1,3 +1,6 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+
+
 #include "TantrumnGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
@@ -43,7 +46,7 @@ void ATantrumnGameModeBase::AttemptStartGame()
 			//this is always called from the authority, aka here
 			StartGame();
 		}
-
+		
 	}
 }
 
@@ -104,7 +107,7 @@ void ATantrumnGameModeBase::StartGame()
 			}
 		}
 	}
-
+		
 }
 
 void ATantrumnGameModeBase::RestartPlayer(AController* NewPlayer)

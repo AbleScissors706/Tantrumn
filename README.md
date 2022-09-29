@@ -1,2 +1,2 @@
 # Tantrumn
- Race to finish line
+ Race to the finish line

@@ -1,26 +1,17 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{A71FD82B-43DC-9070-D29B-638C9FC2FA9B}",
+	"EngineAssociation": "4.26",
 	"Category": "",
 	"Description": "",
 	"Modules": [
 		{
 			"Name": "Tantrumn",
-			"Type": "Runtime",
+			"Type": "Developer",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
 				"Engine",
-				"AIModule",
-				"UMG"
-			]
-		}
-	],
-	"Plugins": [
-		{
-			"Name": "ModelingToolsEditorMode",
-			"Enabled": true,
-			"TargetAllowList": [
-				"Editor"
+				"UMG",
+				"AIModule"
 			]
 		}
 	]
