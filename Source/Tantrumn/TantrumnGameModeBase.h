@@ -38,11 +38,11 @@ private:
 	void SetNumExpectedPlayers(uint8 InNumExpectedPlayers) { NumExpectedPlayers = InNumExpectedPlayers; }
 
 	UPROPERTY(EditAnywhere, Category = "Game Details")
-	uint8 NumExpectedPlayers = 1u;
-
+	uint8 NumExpectedPlayers = 1u;	
+	
 
 	FTimerHandle TimerHandle;
-	
+
 
 	// --- FUNCTIONS --- //
 	void AttemptStartGame();

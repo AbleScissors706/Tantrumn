@@ -21,6 +21,7 @@ ATantrumnGameModeBase::ATantrumnGameModeBase()
 void ATantrumnGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
+
 	if (ATantrumnGameStateBase* TantrumnGameState = GetGameState<ATantrumnGameStateBase>())
 	{
 		TantrumnGameState->SetGameState(EGameState::Waiting);
