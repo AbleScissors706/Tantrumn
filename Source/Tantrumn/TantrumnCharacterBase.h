@@ -244,7 +244,7 @@ private:
 	bool bIsUnderEffect = false;
 	bool bIsEffectBuff = false;
 
-	float DefautlEffectCooldown = 5.0f;
+	float DefaultEffectCooldown = 5.0f;
 	float EffectCooldown = 0.0f;
 
 	EEffectType CurrentEffect = EEffectType::None;

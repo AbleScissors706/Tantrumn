@@ -73,7 +73,7 @@ void ATantrumnCharacterBase::GetLifetimeReplicatedProps(TArray< FLifetimePropert
 void ATantrumnCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-	EffectCooldown = DefautlEffectCooldown;
+	EffectCooldown = DefaultEffectCooldown;
 	if (GetCharacterMovement())
 	{
 		MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
@@ -845,7 +845,7 @@ void ATantrumnCharacterBase::UpdateEffect(float DeltaTime)
 	else
 	{
 		bIsUnderEffect = false;
-		EffectCooldown = DefautlEffectCooldown;
+		EffectCooldown = DefaultEffectCooldown;
 		EndEffect();
 	}
 }
